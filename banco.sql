@@ -27,9 +27,9 @@ CREATE TABLE uso_veiculos (
     data_saida DATETIME NOT NULL,
     data_retorno DATETIME,
     observacao VARCHAR(255),
-    FOREIGN KEY (veiculo_id) REFERENCES veiculos(id),
-    FOREIGN KEY (motorista_id) REFERENCES motoristas(id),
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    FOREIGN KEY (veiculo_id) REFERENCES veiculos(id) ON DELETE CASCADE,
+    FOREIGN KEY (motorista_id) REFERENCES motoristas(id) ON DELETE CASCADE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
 -- Usuário admin padrão (senha: admin123)
