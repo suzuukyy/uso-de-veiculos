@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    datahora DATETIME NOT NULL,
+    usuario VARCHAR(50) NOT NULL,
+    acao VARCHAR(100) NOT NULL,
+    detalhes TEXT
+);
