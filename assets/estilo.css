@@ -156,16 +156,56 @@ table tr:hover {
 
 /* Responsividade */
 @media (max-width: 700px) {
+    html, body {
+        font-size: 15px;
+    }
     .container {
-        max-width: 98vw;
-        padding: 14px 2vw 14px 2vw;
+        max-width: 100vw;
+        margin: 14px 0 0 0;
+        padding: 10px 1vw 10px 1vw;
+        border-radius: 0;
+        box-shadow: none;
     }
     nav {
-        font-size: 0.98rem;
-        padding: 12px 0 8px 0;
+        font-size: 1rem;
+        padding: 10px 0 8px 0;
+        letter-spacing: 0.5px;
+    }
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 0;
     }
     table th, table td {
-        font-size: 0.95rem;
-        padding: 8px 4px;
+        font-size: 0.93rem;
+        padding: 7px 2px;
+        white-space: nowrap;
+    }
+    button, input[type="submit"] {
+        font-size: 1rem;
+        padding: 10px 0;
+        width: 100%;
+    }
+    input[type="text"], input[type="password"], input[type="datetime-local"], input[type="date"], select {
+        font-size: 1rem;
+        padding: 9px 7px;
+    }
+    h1, h2, .form-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* Extra ajuste para tabelas em mobile */
+@media (max-width: 500px) {
+    nav {
+        font-size: 0.85rem;
+    }
+    .container {
+        padding: 6px 0 6px 0;
+    }
+    h1, h2, .form-title {
+        font-size: 1rem;
     }
 }

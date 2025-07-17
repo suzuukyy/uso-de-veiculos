@@ -90,7 +90,7 @@ $usuarios = $conn->query("SELECT id, nome, usuario, admin FROM usuarios ORDER BY
                 <td><?=htmlspecialchars($u['usuario'])?></td>
                 <td><?php
                     if ($u['nome'] === 'Administrador' || $u['usuario'] === 'admin') {
-                        echo 'DEV';
+                        echo 'CEO';
                     } else {
                         echo ($u['admin'] ? 'Sim' : 'Não');
                     }
