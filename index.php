@@ -19,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['usuario'] = $row['usuario'];
             $_SESSION['admin'] = $row['admin'];
             $_SESSION['usuario_id'] = $row['id'];
+            include_once 'log.php';
+            registrar_log($row['usuario'], 'login', 'Login bem-sucedido');
             header('Location: dashboard.php');
             exit();
         }

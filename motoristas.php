@@ -5,6 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 include 'config.php';
+include_once 'log.php';
 $msg = '';
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] == '1') {
@@ -19,6 +20,7 @@ if (isset($_POST['delete_motorista']) && isset($_SESSION['admin']) && $_SESSION[
     $stmt = $conn->prepare("DELETE FROM motoristas WHERE id = ?");
     $stmt->bind_param('i', $delete_id);
     $stmt->execute();
+    registrar_log($_SESSION['usuario'], 'delete_motorista', 'Deletou motorista ID: ' . $delete_id);
     header('Location: motoristas.php?msg=2');
     exit();
 }
@@ -31,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ss', $nome, $cnh);
         if ($stmt->execute()) {
+            registrar_log($_SESSION['usuario'], 'cadastro_motorista', 'Motorista cadastrado: ' . $nome . ' | CNH: ' . $cnh);
             $msg = 'Motorista cadastrado!';
         } else {
             $msg = 'Erro: CNH já cadastrada.';

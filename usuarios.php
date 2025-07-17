@@ -5,6 +5,7 @@ if (!isset($_SESSION['usuario']) || !$_SESSION['admin']) {
     exit();
 }
 include 'config.php';
+include_once 'log.php';
 require_once 'utils.php';
 $msg = '';
 if (isset($_GET['msg'])) {
@@ -21,7 +22,7 @@ if (isset($_POST['delete_user']) && isset($_SESSION['admin']) && $_SESSION['admi
         $stmt = $conn->prepare("DELETE FROM usuarios WHERE id = ?");
         $stmt->bind_param('i', $delete_id);
         $stmt->execute();
-        log_acao($conn, $_SESSION['usuario'], 'Deleção de usuário', 'Usuário ID deletado: ' . $delete_id);
+        registrar_log($_SESSION['usuario'], 'delete_usuario', 'Usuário ID deletado: ' . $delete_id);
         header('Location: usuarios.php?msg=2');
         exit();
     }
@@ -39,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['delete_user'])) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('sssi', $nome, $usuario, $senha_hash, $admin);
         if ($stmt->execute()) {
-            log_acao($conn, $_SESSION['usuario'], 'Cadastro de usuário', 'Usuário cadastrado: ' . $usuario);
+            registrar_log($_SESSION['usuario'], 'cadastro_usuario', 'Usuário cadastrado: ' . $usuario);
             header('Location: usuarios.php?msg=1');
             exit();
         } else {

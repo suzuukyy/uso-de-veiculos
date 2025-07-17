@@ -5,6 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 include 'config.php';
+include_once 'log.php';
 $msg = '';
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] == '1') {
@@ -19,6 +20,7 @@ if (isset($_POST['delete_veiculo']) && isset($_SESSION['admin']) && $_SESSION['a
     $stmt = $conn->prepare("DELETE FROM veiculos WHERE id = ?");
     $stmt->bind_param('i', $delete_id);
     $stmt->execute();
+    registrar_log($_SESSION['usuario'], 'delete_veiculo', 'Deletou veículo ID: ' . $delete_id);
     header('Location: veiculos.php?msg=2');
     exit();
 }
@@ -31,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ss', $placa, $modelo);
         if ($stmt->execute()) {
+            registrar_log($_SESSION['usuario'], 'cadastro_veiculo', 'Veículo cadastrado: ' . $placa . ' | Modelo: ' . $modelo);
             header('Location: veiculos.php?msg=1');
             exit();
         } else {

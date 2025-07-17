@@ -5,6 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 include 'config.php';
+include_once 'log.php';
 $msg = '';
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] == '1') {
@@ -16,6 +17,7 @@ if (isset($_GET['msg'])) {
 // Limpar todos os registros de uso (apenas admin)
 if (isset($_POST['clear_usos']) && isset($_SESSION['admin']) && $_SESSION['admin']) {
     $conn->query("DELETE FROM uso_veiculos");
+    registrar_log($_SESSION['usuario'], 'limpar_usos', 'Limpou todos os registros de uso de veículos');
     header('Location: uso.php?msg=2');
     exit();
 }
@@ -38,6 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param('iiiss', $veiculo_id, $motorista_id, $usuario_id, $data_saida, $observacao);
         }
         if ($stmt->execute()) {
+            $usuario_nome = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : 'desconhecido';
+$usuario_id = isset($_SESSION['usuario_id']) ? $_SESSION['usuario_id'] : 'desconhecido';
+registrar_log($usuario_nome, 'registrar_uso', 'Usuário ID: ' . $usuario_id . ' registrou uso: Veículo ID ' . $veiculo_id . ', Motorista ID ' . $motorista_id . ', Saída: ' . $data_saida . ', Retorno: ' . $data_retorno);
             header('Location: uso.php?msg=1');
             exit();
         } else {

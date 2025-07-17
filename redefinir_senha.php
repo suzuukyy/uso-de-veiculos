@@ -5,6 +5,7 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 include 'config.php';
+include_once 'log.php';
 $msg = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha_atual = $_POST['senha_atual'];
@@ -29,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt2->bind_param('ss', $nova_hash, $usuario);
                 if ($stmt2->execute()) {
                     $msg = 'Senha redefinida com sucesso!';
+                    registrar_log($_SESSION['usuario'], 'redefinir_senha', 'Senha redefinida com sucesso');
                 } else {
                     $msg = 'Erro ao atualizar senha.';
                 }
